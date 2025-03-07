@@ -1,24 +1,74 @@
 #include <stdio.h>
 
-// Desafio Super Trunfo - Países
-// Tema 1 - Cadastro das Cartas
-// Este código inicial serve como base para o desenvolvimento do sistema de cadastro de cartas de cidades.
-// Siga os comentários para implementar cada parte do desafio.
-//Teste larissa
+#define MAX_CARTAS 32  // 8 estados * 4 cidades cada
+
+typedef struct {
+    char codigo[4];  
+    int populacao;
+    float area;
+    float pib;
+    int pontos_turisticos;
+    float densidade;
+} Carta;
+
+void cadastrarCartas(Carta cartas[], int *quantidade) {
+    if (*quantidade >= MAX_CARTAS) {
+        printf("Limite de cartas atingido!\n");
+        return;
+    }
+    
+    printf("Código (ex: A01): ");
+    scanf("%s", cartas[*quantidade].codigo);
+    printf("População: ");
+    scanf("%d", &cartas[*quantidade].populacao);
+    printf("Área (km²): ");
+    scanf("%f", &cartas[*quantidade].area);
+    printf("PIB (bilhões $): ");
+    scanf("%f", &cartas[*quantidade].pib);
+    printf("Pontos turísticos: ");
+    scanf("%d", &cartas[*quantidade].pontos_turisticos);
+    
+    cartas[*quantidade].densidade = cartas[*quantidade].populacao / cartas[*quantidade].area;
+    
+    (*quantidade)++;
+    printf("Carta cadastrada com sucesso!\n");
+}
+
+void exibirCartas(Carta cartas[], int quantidade) {
+    if (quantidade == 0) {
+        printf("Nenhuma carta cadastrada.\n");
+        return;
+    }
+    
+    printf("\nCartas cadastradas:\n");
+    for (int i = 0; i < quantidade; i++) {
+        printf("\nCódigo: %s\nPopulação: %d\nÁrea: %.2f km²\nPIB: %.2f bi\nPontos turísticos: %d\nDensidade Populacional: %.2f hab/km²\n",
+               cartas[i].codigo, cartas[i].populacao, cartas[i].area, cartas[i].pib, cartas[i].pontos_turisticos, cartas[i].densidade);
+    }
+}
 
 int main() {
-    printf("Super Trunfo!\n");
-    printf("novo commit\n");
-    // Sugestão: Defina variáveis separadas para cada atributo da cidade.
-    // Exemplos de atributos: código da cidade, nome, população, área, PIB, número de pontos turísticos.
-    
-    // Cadastro das Cartas:
-    // Sugestão: Utilize a função scanf para capturar as entradas do usuário para cada atributo.
-    // Solicite ao usuário que insira as informações de cada cidade, como o código, nome, população, área, etc.
-    
-    // Exibição dos Dados das Cartas:
-    // Sugestão: Utilize a função printf para exibir as informações das cartas cadastradas de forma clara e organizada.
-    // Exiba os valores inseridos para cada atributo da cidade, um por linha.
+    Carta cartas[MAX_CARTAS];
+    int quantidade = 0, opcao;
+
+    do {
+        printf("\n1. Cadastrar Carta\n2. Exibir Cartas\n0. Sair\nEscolha: ");
+        scanf("%d", &opcao);
+        
+        switch (opcao) {
+            case 1:
+                cadastrarCartas(cartas, &quantidade);
+                break;
+            case 2:
+                exibirCartas(cartas, quantidade);
+                break;
+            case 0:
+                printf("Saindo...\n");
+                break;
+            default:
+                printf("Opção inválida!\n");
+        }
+    } while (opcao != 0);
 
     return 0;
 }
