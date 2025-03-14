@@ -47,7 +47,7 @@ void exibirCartas(Carta cartas[], int quantidade) {
     }
 }
 
-int main() {
+int (main)() {
     Carta cartas[MAX_CARTAS];
     int quantidade = 0, opcao;
 
